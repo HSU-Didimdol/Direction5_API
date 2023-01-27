@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# API CLIENT KEY / CLIENT SECRET
+/app/src/main/java/com/example/picknumber/keyModel
