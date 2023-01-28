@@ -14,8 +14,8 @@ interface getDistance {
     fun getDistance(
         @Header("X-NCP-APIGW-API-KEY-ID") clientID: String,
         @Header("X-NCP-APIGW-API-KEY") clientSecret: String,
-        @Query("start") start: String,
-        @Query("goal") goal: String,
+        @Query("start", encoded = true) start: String,
+        @Query("goal", encoded = true) goal: String,
 //        @Query("option") option: String, // 필수여부 N
     ): Call<Result>
 }

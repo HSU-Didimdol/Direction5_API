@@ -24,11 +24,11 @@ class DistanceController {
         val service = retrofit.create(getDistance::class.java)
         service.getDistance(ApiKey.CLIENT_ID, ApiKey.CLIENT_SECRET, start, goal).enqueue(object : Callback<Result> {
             override fun onResponse(call: Call<Result>, response: Response<Result>) {
-                Log.d("response 값 나옴?", "result: ${response.body()}")
+                Log.d("response 값 나옴?", "result: ${response}")
                 if (response.isSuccessful) {
                     if (response.body()?.route != null) {
                         Log.d("api 로 데이터 잘 불러와짐?", "body : ${response.body().toString()}")
-                        Log.d("distance 나옴?", "distance : ${response.body()!!.route}")
+                        Log.d("distance 나옴?", "distance : ${response.body()!!.route.traoptimal[0].summary.distance}")
                     }
                 }
             }
