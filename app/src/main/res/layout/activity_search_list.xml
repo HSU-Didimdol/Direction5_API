@@ -7,17 +7,16 @@
 
     <TextView
         android:id="@+id/bankName"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="은행지점"
-        android:layout_weight="1"
         android:layout_margin="6dp"
+        android:layout_weight="1"
         android:padding="10dp"
-        />
+        android:text="은행지점" />
 
     <TextView
         android:id="@+id/distance"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="거리"
         />

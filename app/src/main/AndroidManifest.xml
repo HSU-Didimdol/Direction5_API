@@ -17,7 +17,7 @@
         android:hardwareAccelerated="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.DistanceActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible">
@@ -31,6 +31,7 @@
                 android:name="com.naver.maps.map.CLIENT_ID"
                 android:value="saz36oia18" />
         </activity>
+        <activity android:name=".activity.DistanceActivity"/>
     </application>
 
 </manifest>

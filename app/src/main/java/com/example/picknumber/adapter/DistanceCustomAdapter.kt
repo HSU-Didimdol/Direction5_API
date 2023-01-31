@@ -26,7 +26,7 @@ class DistanceCustomAdapter(var listData: ArrayList<Search>) : RecyclerView.Adap
         Log.d("listData >> ", listData.toString())
         var item = listData[position]
 
-        holder.distance.text = item.distance
+        holder.distance.text = item.distance.toString()
         holder.bankName.text = item.bankName
 
     }
