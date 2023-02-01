@@ -55,17 +55,13 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 launch {
 
                     Log.d("시작??", "시작??")
-//                    dca = DistanceCustomAdapter()
-                    // 은행별로 경도, 위도 값 추출해 리스트로 뽑아오고
-//                    var bankLatLngList: ArrayList<BankLatLng> = dc.getBankPos()
-
-                    dc.getSortedDistance()
-
+                    var searchList = dc.getSortedDistance()
+                    Log.d("넘어온 searchList ", searchList.toString())
 
                     // 각각 경도, 위도 값 넣어서 거리 가까운 순으로 리스트업
-//                    for (i in 0 until searchList.size) {
-//
-//                    }
+                    for (i in 0 until searchList.size) {
+
+                    }
                 }
 
                 return true
