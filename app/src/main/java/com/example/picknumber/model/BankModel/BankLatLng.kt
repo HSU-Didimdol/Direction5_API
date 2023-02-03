@@ -4,4 +4,4 @@ data class BankLatLng(
     val name: String,
     val lat: Double,
     val lng: Double,
-)
+) : java.io.Serializable

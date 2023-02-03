@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/distance_recyclerView"
+            android:id="@+id/distanceRecyclerView"
             android:layout_width="407dp"
             android:layout_height="400dp"
             android:orientation="vertical"

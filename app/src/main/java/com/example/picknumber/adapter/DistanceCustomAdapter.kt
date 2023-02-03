@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.picknumber.R
 import com.example.picknumber.model.SearchModel.Search
 
-class DistanceCustomAdapter(var listData: ArrayList<Search>) : RecyclerView.Adapter<DistanceCustomAdapter.ViewHolder> () {
+class DistanceCustomAdapter(var listData: ArrayList<Search>, var onRouteClickedListener:OnRouteClickedListener) : RecyclerView.Adapter<DistanceCustomAdapter.ViewHolder> () {
+    interface OnRouteClickedListener {
+        fun onRouteClicked(model: Search)
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var distance: TextView = itemView.findViewById(R.id.distance)
@@ -29,6 +32,9 @@ class DistanceCustomAdapter(var listData: ArrayList<Search>) : RecyclerView.Adap
         holder.distance.text = item.distance.toString()
         holder.bankName.text = item.bankName
 
+        holder.itemView.setOnClickListener { // 각 아이템 누르면
+            onRouteClickedListener.onRouteClicked(item)
+        }
     }
 
     override fun getItemCount(): Int {
