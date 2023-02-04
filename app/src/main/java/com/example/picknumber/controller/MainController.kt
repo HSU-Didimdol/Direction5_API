@@ -17,13 +17,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainController {
     // 각 은행지점의 (이름, 경도, 위도) 리스트로 뽑기
-    fun getNameLatLngList() {
+    fun getNameLatLngList(context:Context) {
 
         Log.d("여기 오나?", "2")
 
         val dc = DistanceController()
 
         var bankLatLngList: ArrayList<BankLatLng> = ArrayList()
+        val start = "127.0103676,37.5825502" // 현재 내 위치 (학교 위치로)
 
         val retrofit = Retrofit.Builder().baseUrl(MockyApi.DOMAIN)
             .addConverterFactory(GsonConverterFactory.create())
@@ -40,7 +41,7 @@ class MainController {
                         bankLatLngList = getBankNameLatLngList(response.body()!!)
                         Log.d("은행 경도, 위도 잘 들어오나? ", bankLatLngList.toString()) // 잘 들어오고
 
-                        dc.getDistance(bankLatLngList)
+                        dc.getDistanceToBank(start, bankLatLngList, context)
                     }
                 }
             }

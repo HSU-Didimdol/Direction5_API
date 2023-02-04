@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         dc = DistanceController()
 //        dca = DistanceCustomAdapter()
 
-        val start = "127.0103676,37.5825502" // 현재 내 위치 (학교 위치로)
         val goal = "127.1373933,37.4428502" // 성남수정 본점 (경도, 위도)
 
 //        binding.searchBank.isSubmitButtonEnabled = true
@@ -58,9 +57,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 launch {
 
                     Log.d("시작??", "시작??")
-                    mc.getNameLatLngList() // 각 은행 별 (이름, 경도, 위도) 리스트 가져오기
-//                    Log.d("ma::distance >>", dc.getDistanceToBank(start, goal).toString())
-//                    Log.d("searchList 잘 나옴?? ", searchList.toString())
+
+                    mc.getNameLatLngList(applicationContext) // 각 은행 별 (이름, 경도, 위도) 리스트 가져오기
 
 //                    dca = DistanceCustomAdapter(searchList, object : DistanceCustomAdapter.OnRouteClickedListener {
 //                        override fun onRouteClicked(model: Search) {
