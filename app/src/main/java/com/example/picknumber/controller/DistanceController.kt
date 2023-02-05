@@ -1,16 +1,12 @@
 package com.example.picknumber.controller
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.util.Log
-import com.example.picknumber.activity.DistanceActivity
-import com.example.picknumber.activity.MainActivity
 import com.example.picknumber.keyModel.ApiKey
 import com.example.picknumber.model.BankModel.BankLatLng
 import com.example.picknumber.service.DistanceService
-import retrofit2.converter.gson.GsonConverterFactory
 import com.example.picknumber.model.ResultModel.Result
+import retrofit2.converter.gson.GsonConverterFactory
 import com.example.picknumber.model.SearchModel.Search
 import kotlinx.coroutines.*
 import retrofit2.*
@@ -24,10 +20,7 @@ class DistanceController {
     // 현 위치 ~ 각 본점까지의 거리 구하기
     // getSortedDistance() 에서 getDistanceToBank() 호출해서 distance 구하려니까 0으로 뜬다.. >> 코루틴 이용 >> 일단 나중에
     // 여기서 거리 값까지 구해서 리스트 넘겨주기
-    fun getDistanceToBank(start:String, bankLatLngList:ArrayList<BankLatLng>, context: Context) {
-
-        var goal = ""
-        var distance = 0
+    fun getDistanceToBank(start: String, goal: String): Int {
 
         Log.d("여기 오나?", "4")
 
@@ -37,36 +30,21 @@ class DistanceController {
 
         val service = retrofit.create(DistanceService::class.java)
 
-        // (은행지점, 거리) 리스트
-        var searchList: ArrayList<Search> = ArrayList()
+        var call: Call<Result> = service.getDistance(ApiKey.CLIENT_ID, ApiKey.CLIENT_SECRET, start, goal)
+        var body = call.execute().body()
 
-        CoroutineScope(Dispatchers.Main).launch {
-            // (경도, 위도) 리스트를 기반으로 각 은행 별까지의 거리 구하기
-            for (i in 0 until bankLatLngList!!.size) {
-                Log.d("여기 다시 오나?", "1")
-                Log.d("값이 어떻게 나오나?", bankLatLngList[i].toString())
-                Log.d("경도 >> ", bankLatLngList[i].lat.toString())
-                Log.d("위도 >> ", bankLatLngList[i].lng.toString())
+        try {
+            var distance = body!!.route.traoptimal[0].summary.distance
+            Log.d("distance >> ", distance.toString())
+            return distance
+        } catch (e: Exception) {
+            return 0
+        }
 
-                var bankName = bankLatLngList[i].name
-                goal = bankLatLngList[i].lng.toString() + "," + bankLatLngList[i].lat.toString()
+//        CoroutineScope(Dispatchers.Main).launch {
+//
 
-                val response = service.getDistance(ApiKey.CLIENT_ID, ApiKey.CLIENT_SECRET, start, goal)
-
-                try {
-                    distance = response.await().route.traoptimal[0].summary.distance
-                    Log.d("distance >> ", distance.toString())
-                    searchList.add(Search(distance, bankName))
-                    Log.d("searchList 잘 나오는 중??", searchList.toString())
-
-                    getShortSortedDistance(searchList, context)
-
-                } catch (e: Exception) {
-                    for (i in 0 until bankLatLngList.size)
-                        searchList.add(Search(0, bankName = bankLatLngList[i].name))
-                }
-
-                // (경도, 위도) 리스트를 기반으로 각 은행 별까지의 거리 구하기
+        // (경도, 위도) 리스트를 기반으로 각 은행 별까지의 거리 구하기
 //        for (i in 0 until bankLatLngList!!.size) {
 //            Log.d("여기 다시 오나?", "1")
 //            Log.d("값이 어떻게 나오나?", bankLatLngList[i].toString())
@@ -101,15 +79,11 @@ class DistanceController {
 //        }
 //    }
 //}
-
-            }
-        }
     }
 
     private fun getShortSortedDistance(searchList:ArrayList<Search>, context:Context) {
         Log.d("여기서도 잘 나오나??", searchList.toString())
 
-        searchList.sortBy(Search::distance)
-        Log.d("sortedDistance >> ", searchList.toString())
+
     }
 }

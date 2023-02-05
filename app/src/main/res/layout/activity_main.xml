@@ -5,39 +5,40 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/distanceContainer"
-    android:layout_width="409dp"
-    android:layout_height="684dp"
-    android:layout_marginEnd="2dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/distanceContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchBank">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/distanceRecyclerView"
-        android:layout_width="407dp"
-        android:layout_height="400dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="1dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/distanceRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-<SearchView
-    android:id="@+id/searchBank"
-    android:layout_width="match_parent"
-    android:layout_height="47dp"
-    android:layout_marginTop="8dp"
-    android:background="@drawable/bg_border_view"
-    android:queryHint="업체명을 검색하세요"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    <SearchView
+        android:id="@+id/searchBank"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_border_view"
+        android:queryHint="업체명을 검색하세요"
+        app:layout_constraintBottom_toTopOf="@+id/distanceContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <requestFocus />
-</SearchView>
+        <requestFocus />
+    </SearchView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

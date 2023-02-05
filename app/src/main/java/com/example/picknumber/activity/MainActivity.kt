@@ -1,6 +1,8 @@
 package com.example.picknumber.activity
 
+import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
 import android.util.Log
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -41,7 +43,15 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         dc = DistanceController()
 //        dca = DistanceCustomAdapter()
 
-        val goal = "127.1373933,37.4428502" // 성남수정 본점 (경도, 위도)
+        if (Build.VERSION.SDK_INT > 9) {
+            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+        }
+
+        val start = "127.0103676,37.5825502" // 현재 내 위치 (학교 위치로)
+
+        // (은행지점, 거리) 리스트
+        var searchList:ArrayList<Search> = ArrayList()
 
 //        binding.searchBank.isSubmitButtonEnabled = true
 
@@ -58,16 +68,31 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
                     Log.d("시작??", "시작??")
 
-                    mc.getNameLatLngList(applicationContext) // 각 은행 별 (이름, 경도, 위도) 리스트 가져오기
+                    val bankLatLngList = mc.getNameLatLngList() // 각 은행 별 (이름, 경도, 위도) 리스트 가져오기
 
-//                    dca = DistanceCustomAdapter(searchList, object : DistanceCustomAdapter.OnRouteClickedListener {
-//                        override fun onRouteClicked(model: Search) {
-//                            Log.d("item 눌림??", "item 눌림")
-//                        }
-//
-//                    })
-//                    binding.distanceRecyclerView.adapter = dca
-//                    dca.notifyDataSetChanged()
+                    Log.d("ma::bankLatLngList >> ", bankLatLngList.toString())
+
+                    // 받아온 bankLatLngList 로 거리 구하기
+                    for (i in 0 until bankLatLngList.size) {
+                        var bankName = bankLatLngList[i].name
+                        var goal = bankLatLngList[i].lng.toString() + "," + bankLatLngList[i].lat.toString()
+                        var distance = dc.getDistanceToBank(start, goal)
+
+                        searchList.add(Search(distance, bankName))
+                    }
+                    Log.d("ma::searchList >> ", searchList.toString())
+
+                    searchList.sortBy(Search::distance)
+                    Log.d("sortedDistance >> ", searchList.toString())
+
+                    dca = DistanceCustomAdapter(searchList, object : DistanceCustomAdapter.OnRouteClickedListener {
+                        override fun onRouteClicked(model: Search) {
+                            Log.d("item 눌림??", "item 눌림")
+                        }
+
+                    })
+                    binding.distanceRecyclerView.adapter = dca
+                    dca.notifyDataSetChanged()
                 }
 
                 return true
