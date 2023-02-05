@@ -20,7 +20,7 @@ class DistanceController {
     // 현 위치 ~ 각 본점까지의 거리 구하기
     // getSortedDistance() 에서 getDistanceToBank() 호출해서 distance 구하려니까 0으로 뜬다.. >> 코루틴 이용 >> 일단 나중에
     // 여기서 거리 값까지 구해서 리스트 넘겨주기
-    fun getDistanceToBank(start: String, goal: String): Int {
+    fun getDistanceToBank(start: String, goal: String): Double {
 
         Log.d("여기 오나?", "4")
 
@@ -32,14 +32,17 @@ class DistanceController {
 
         var call: Call<Result> = service.getDistance(ApiKey.CLIENT_ID, ApiKey.CLIENT_SECRET, start, goal)
         var body = call.execute().body()
+        var distance = 0
 
         try {
-            var distance = body!!.route.traoptimal[0].summary.distance
+            distance = body!!.route.traoptimal[0].summary.distance
             Log.d("distance >> ", distance.toString())
-            return distance
+            return distance.toDouble()
         } catch (e: Exception) {
-            return 0
+            return 0.0
         }
+
+        return distance.toDouble()
 
 //        CoroutineScope(Dispatchers.Main).launch {
 //
@@ -79,11 +82,5 @@ class DistanceController {
 //        }
 //    }
 //}
-    }
-
-    private fun getShortSortedDistance(searchList:ArrayList<Search>, context:Context) {
-        Log.d("여기서도 잘 나오나??", searchList.toString())
-
-
     }
 }

@@ -29,7 +29,7 @@ class DistanceCustomAdapter(var listData: ArrayList<Search>, var onRouteClickedL
         Log.d("listData >> ", listData.toString())
         var item = listData[position]
 
-        holder.distance.text = item.distance.toString()
+        holder.distance.text = item.distance.toString() + "km"
         holder.bankName.text = item.bankName
 
         holder.itemView.setOnClickListener { // 각 아이템 누르면
