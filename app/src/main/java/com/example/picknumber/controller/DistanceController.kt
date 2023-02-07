@@ -35,6 +35,7 @@ class DistanceController {
         var distance = 0
 
         try {
+            Log.d("body >> ", body.toString())
             distance = body!!.route.traoptimal[0].summary.distance
             Log.d("distance >> ", distance.toString())
             return distance.toDouble()
