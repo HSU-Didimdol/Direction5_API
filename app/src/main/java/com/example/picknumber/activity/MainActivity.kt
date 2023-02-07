@@ -68,12 +68,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
                     searchList.clear()
 
-                    var bankLatLngList = mc.getNameLatLngList() // 각 은행 별 (이름, 경도, 위도) 리스트 가져오기
+                    var bankLatLngList = mc.getNameLatLngList(applicationContext) // 각 은행 별 (이름, 경도, 위도) 리스트 가져오기
 
                     Log.d("ma::bankLatLngList >> ", bankLatLngList.toString())
 
                     // 받아온 bankLatLngList 로 거리 구하기
-                    for (i in 0 until bankLatLngList.size) {
+                    /*for (i in 0 until bankLatLngList.size) {
                         var bankName = bankLatLngList[i].name
                         var goal = bankLatLngList[i].lng.toString() + "," + bankLatLngList[i].lat.toString()
                         var distance = dc.getDistanceToBank(start, goal)
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
                     })
                     binding.distanceRecyclerView.adapter = dca
-                    dca.notifyDataSetChanged()
+                    dca.notifyDataSetChanged()*/
                 }
 
                 return true

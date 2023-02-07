@@ -23,6 +23,7 @@ abstract class BankDatabase: RoomDatabase() {
                     .allowMainThreadQueries()
                     .build()
             }
+            return INSTANCE
         }
     }
 }

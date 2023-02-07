@@ -1,15 +1,17 @@
 package com.example.picknumber.controller
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
-import com.example.picknumber.activity.MainActivity
+import com.example.picknumber.database.BankDatabase
 import com.example.picknumber.keyModel.MockyApi
 import com.example.picknumber.model.BankDTO.BankDTO
-import com.example.picknumber.model.BankModel.Bank
 import com.example.picknumber.model.BankModel.BankLatLng
+import com.example.picknumber.entity.Bank
 import com.example.picknumber.model.SearchModel.Search
 import com.example.picknumber.service.BankService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,15 +21,29 @@ import java.lang.Exception
 
 class MainController {
     // 각 은행지점의 (이름, 경도, 위도) 리스트로 뽑기
-    fun getNameLatLngList() : ArrayList<BankLatLng> {
+    fun getNameLatLngList(context: Context) : List<Bank> {
 
         Log.d("여기 오나?", "2")
 
         val dc = DistanceController()
 
         var bankLatLngList: ArrayList<BankLatLng> = ArrayList()
+        var bankData: List<Bank> = listOf()
 
-        val retrofit = Retrofit.Builder().baseUrl(MockyApi.DOMAIN)
+        /**
+         * 임시 API 만들어서 데이터 불러옴 -> Room 으로 변경
+         */
+
+        // db 연결
+        val db = BankDatabase.getDatabase(context)
+
+        // db 에 저장된 데이터 불러오기 (코루틴)
+        CoroutineScope(Dispatchers.IO).launch {
+            bankData = db!!.bankDao().getAllBank()
+            Log.d("db 잘 나옴??", bankData.toString())
+        }
+
+       /*val retrofit = Retrofit.Builder().baseUrl(MockyApi.DOMAIN)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -46,8 +62,8 @@ class MainController {
             var ecp1 = ArrayList<BankLatLng>()
             ecp1.add(BankLatLng("",0.0, 0.0))
             return ecp1
-        }
-        return bankLatLngList
+        }*/
+        return bankData
 
 //        service.getBank().enqueue(object : Callback<BankDTO> {
 //            override fun onResponse(call: Call<BankDTO>, response: Response<BankDTO>) {
