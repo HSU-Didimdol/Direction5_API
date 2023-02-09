@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         binding.searchBank.isSubmitButtonEnabled = true
 
-        binding.searchBank.requestFocus()
+//        binding.searchBank.requestFocus()
 
         binding.searchBank.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(bank: String?): Boolean {
@@ -68,14 +68,14 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
                     searchList.clear()
 
-                    var bankLatLngList = mc.getNameLatLngList(applicationContext) // 각 은행 별 (이름, 경도, 위도) 리스트 가져오기
+                    var bankData = mc.getNameLatLngList(applicationContext) // 각 은행 별 (ID, 이름, 지점, 경도, 위도) 리스트 가져오기
 
-                    Log.d("ma::bankLatLngList >> ", bankLatLngList.toString())
+                    Log.d("ma::bankLatLngList >> ", bankData.toString())
 
                     // 받아온 bankLatLngList 로 거리 구하기
-                    /*for (i in 0 until bankLatLngList.size) {
-                        var bankName = bankLatLngList[i].name
-                        var goal = bankLatLngList[i].lng.toString() + "," + bankLatLngList[i].lat.toString()
+                    for (i in 0 until bankData.size) {
+                        var bankName = bankData[i].name + " 새마을금고 " + bankData[i].divisionName
+                        var goal = bankData[i].longitude.toString() + "," + bankData[i].latitude.toString()
                         var distance = dc.getDistanceToBank(start, goal)
 
                         distance /= 1000
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
                     })
                     binding.distanceRecyclerView.adapter = dca
-                    dca.notifyDataSetChanged()*/
+                    dca.notifyDataSetChanged()
                 }
 
                 return true

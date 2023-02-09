@@ -6,15 +6,18 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "bank")
 data class Bank (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     val companyID: Int,
+
+    @ColumnInfo(name = "name")
+    val name: String,
 
     @ColumnInfo(name = "divisionName")
     val divisionName: String,
 
     @ColumnInfo(name = "latitude")
-    val latitude: Double,
+    val longitude: Double,
 
     @ColumnInfo(name = "longitude")
-    val longitude: Double
+    val latitude: Double
 )

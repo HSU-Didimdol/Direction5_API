@@ -9,9 +9,7 @@ import com.example.picknumber.model.BankModel.BankLatLng
 import com.example.picknumber.entity.Bank
 import com.example.picknumber.model.SearchModel.Search
 import com.example.picknumber.service.BankService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,12 +34,23 @@ class MainController {
 
         // db 연결
         val db = BankDatabase.getDatabase(context)
+        val divisionName = "본점"
 
-        // db 에 저장된 데이터 불러오기 (코루틴)
-        CoroutineScope(Dispatchers.IO).launch {
-            bankData = db!!.bankDao().getAllBank()
-            Log.d("db 잘 나옴??", bankData.toString())
+        // runBlocking: 괄호 내의 코드가 전부 진행된 다음에야 괄호 밖으로 벗어날 수 있음 (동기 처리 가능)
+        runBlocking {
+            delay(1000L)
+            db!!.bankDao().insertBank(Bank(1000276, "서평택", divisionName, 126.9220912, 36.979035))
+            db!!.bankDao().insertBank(Bank(1000271, "평택", divisionName, 127.0877682, 36.9919183))
+            db!!.bankDao().insertBank(Bank(1000368, "안성", divisionName, 127.2566183, 37.0095927))
+            db!!.bankDao().insertBank(Bank(1000280, "쌍용자동차", divisionName, 127.0952752, 37.0282867))
+            db!!.bankDao().insertBank(Bank(1000371, "안성장학", divisionName, 127.4238879, 37.0754008))
+
+            Log.d("데이터베이스 입력 성공", "1")
         }
+
+        // db 에 저장된 데이터 불러오기
+        bankData = db!!.bankDao().getAllBank()
+        Log.d("db 잘 나옴??", bankData.toString())
 
        /*val retrofit = Retrofit.Builder().baseUrl(MockyApi.DOMAIN)
             .addConverterFactory(GsonConverterFactory.create())
